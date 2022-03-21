@@ -1,0 +1,67 @@
+
+<div class="container">
+  <h1 class="text-center">Template Driven Form</h1>
+<form #userform="ngForm" (ngSubmit)="onsubmit(userform.value)">
+  <!--for testing-->
+  <!--{{userform.value |json}}
+  <br>
+  {{userModel | json}}-->
+
+    <div class="form-group">
+      <label for="First Name">First Name</label>
+      <input type="text" class="form-control" name="txtFname" minlength="3" required #firstName="ngModel" ngModel [(ngModel)]="userModel.fname" id="First Name">
+    </div>
+    <!--for message errors-->
+    <div class="text-danger"  *ngIf="firstName.invalid && firstName.touched">
+      <small *ngIf="firstName.errors?.['required']">*required</small>
+      <small *ngIf="firstName.errors?.['minlength']">*minlength must be {{firstName.errors?.['minlength'].requiredLength}} and more ----you have actual length {{firstName.errors?.['minlength'].actualLength}} </small>
+    </div>
+    <div class="form-group">
+      <label for="Last Name"> Last Name</label>
+      <input type="text" class="form-control" name="txtLname" minlength="3" required #lastName="ngModel"  ngModel [(ngModel)]="userModel.lname" id="Last Name">
+    </div>
+    <!--for message errors-->
+    <div class="text-danger"*ngIf="lastName.invalid && lastName.touched">
+      <small *ngIf="lastName.errors?.['required']">*required</small>
+      <small *ngIf="lastName.errors?.['minlength']">*minlength must be {{lastName.errors?.['minlength'].requiredLength}} and more ----you have actual length {{lastName.errors?.['minlength'].actualLength}} </small>
+    </div>
+
+    <div class="form-group">
+      <label for="email"> Email</label>
+      <input type="email" class="form-control" name="email"  email required #email="ngModel" ngModel [(ngModel)]="userModel.email" id="email">
+    </div>
+    <!--for message errors-->
+    <div class="text-danger"*ngIf="email.invalid && email.touched">
+      <small *ngIf="email.errors?.['required']">*required</small>
+      <small *ngIf="email.errors?.['email']">*invalid email</small>
+    </div>
+
+      <div class="form-check form-check">
+        <input class="form-check-input" type="radio" name="gender" required #gender="ngModel" ngModel [(ngModel)]="userModel.gender" id="Male" value="Male">
+        <label class="form-check-label" for="Male">Male</label>
+      </div>
+
+      <div class="form-check form-check">
+        <input class="form-check-input" type="radio" name="gender" required #gender="ngModel" ngModel [(ngModel)]="userModel.gender" id="Female" value="Female">
+        <label class="form-check-label" for="Female">Female</label>
+      </div>
+
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" name="martialStatus" ngModel [(ngModel)]="userModel.martialStatus" id="is married">
+      <label class="form-check-label" for="is married">is married</label>
+    </div>
+
+    <label>Country</label>
+     <!--for message errors-->
+     <div class="text-danger" *ngIf="country.invalid && country.touched">
+      <small *ngIf="country.errors?.['required']">*required</small>
+      </div>
+    <div class="input-group ">
+        <select class="custom-select"  class="form-select form-select-lg mb-3" name="country" #country="ngModel" required ngModel [(ngModel)]="userModel.country"  id="countrySelect">
+          <option *ngFor="let country of countries">{{country.name}}</option>
+        </select>
+      </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="userform.invalid">Submit</button>
+  </form>
+</div>
